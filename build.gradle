@@ -1,0 +1,99 @@
+/*
+ * Copyright (c) 2021 SailPoint Technologies, Inc.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    // Nimbus JOSE JWT
+    // https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt
+    api group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '9.9'
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.13.2'
+}
+
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
+}
+
+java {
+    modularity.inferModulePath = true
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        model(MavenPublication) {
+            from components.java
+            pom {
+                name = 'ietf-subject-identifiers-model'
+                description = 'IETF Subject Identifiers model'
+                url = 'http://github.com/sailpoint-oss/ietf-subject-identifiers-model'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'adam-hampton-sp'
+                        name = 'Adam Hampton'
+                        email = 'adam.hampton@sailpoint.com'
+                    }
+                    developer {
+                        id = 'matt-domsch-sp'
+                        name = 'Matt Domsch'
+                        email = 'matt.domsch@sailpoint.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/sailpoint-oss/ietf-subject-identifiers-model.git'
+                    developerConnection = 'scm:git:ssh://github.com/sailpoint-oss/ietf-subject-identifiers-model.git'
+                    url = 'https://github.com/sailpoint-oss/ietf-subject-identifers-model/'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'myRepo'
+            url = "file://${buildDir}/repo"
+        }
+    }
+}
+
+javadoc {
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
+
+signing {
+    useGpgCmd()
+    sign publishing.publications.model
+}
+
+group = 'com.sailpoint'
+version = '0.1.0-SNAPSHOT'
+sourceCompatibility = 9;
+targetCompatibility = 9;

@@ -58,3 +58,26 @@ produces a versioned .jar file in the build/libs directory:
 The library has tests implemented in `/src/test/java/` and are run with Gradle:
 
 	./gradlew test
+
+## Incorporation into your own projects
+
+The library is published to Maven Central, and may be incorporated into your own projects as a dependency.
+Because the library is under active and frequent development, you may wish to pull from the OSSRH
+snapshot repository as added here:
+    
+`build.gradle`
+
+    repositories {
+        mavenCentral()
+            maven {
+                url "https://s01.oss.sonatype.org/content/repositories/releases/"
+            }
+            maven {
+                url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            }
+    }
+    
+    dependencies {
+        implementation group: 'com.sailpoint', name: 'ietf-subject-identifiers-model', version: '0.1.0'
+    }
+

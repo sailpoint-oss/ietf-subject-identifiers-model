@@ -249,4 +249,29 @@ public class SubjectIdentifierTests {
         Assert.assertTrue(identifiers.get(1) instanceof PhoneNumberSubjectIdentifier);
         Assert.assertTrue(identifiers.get(2) instanceof EmailSubjectIdentifier);
     }
+
+    @Test
+    public void ConvertAliasesSubjectsNegativeTest() throws ParseException, SIValidationException {
+        final String figure_text = "{\n" +
+                "  \"format\": \"aliases\",\n" +
+                "  \"identifiers\": [\n" +
+                "    {\n" +
+                "      \"format\": \"aliases\",\n" +
+                "      \"identifiers\": [\n" +
+                "        {\n" +
+                "          \"format\": \"phone_number\",\n" +
+                "          \"phone_number\": \"+12065550100\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"format\": \"email\",\n" +
+                "          \"email\": \"user+qualifier@example.com\"\n" +
+                "        }\n" +
+                "      ]\n" +
+                "    }" +
+                "  ]\n" +
+                "}";
+
+        final JSONObject figureJson = new JSONObject(JSONObjectUtils.parse(figure_text));
+        Assert.assertThrows(SIValidationException.class, () -> SubjectIdentifier.convertSubjects(figureJson));
+    }
 }

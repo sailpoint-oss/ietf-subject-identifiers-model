@@ -9,6 +9,7 @@ package com.sailpoint.ietf.subjectidentifiers.model;
 
 import com.nimbusds.jose.shaded.json.JSONArray;
 import com.nimbusds.jose.shaded.json.JSONObject;
+import com.nimbusds.jose.util.JSONObjectUtils;
 
 import java.text.ParseException;
 
@@ -53,6 +54,10 @@ public class AliasesSubjectIdentifier extends SubjectIdentifier {
         // Validate each of them.
         for (Object si : identifiers) {
             if (si instanceof SubjectIdentifier) {
+                // Alias SIs cannot be recursive
+                if (JSONObjectUtils.getString((JSONObject)si, SubjectIdentifierMembers.FORMAT.toString())
+                        .equals(SubjectIdentifierFormats.ALIASES.toString()))
+                    throw new SIValidationException("AliasesSubjectIdentifier identifiers member must not be an AliasSI.");
                 ((SubjectIdentifier)si).validate();
             }
         }

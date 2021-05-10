@@ -12,36 +12,23 @@ import java.net.URI;
 
 public class DIDSubjectIdentifier extends SubjectIdentifier {
 
+    private void validateUri() throws SIValidationException {
+        validateMemberPresentNotNullNotEmptyString(SubjectIdentifierMembers.URI.toString());
 
-
-    private static void validateUri(final DIDSubjectIdentifier subj) throws SIValidationException {
-        final Object o = subj.get(SubjectIdentifierMembers.URI.toString());
-        String value;
-        if (null == o) {
-            throw new SIValidationException(subj.getClass().getName() + " member uri is missing or null.");
-        }
-        if (o instanceof String){
-            value = (String) o;
-            if (value.isEmpty()) {
-                throw new SIValidationException(subj.getClass().getName() + " member uri is empty.");
-            }
-        }
-        else {
-            throw new SIValidationException(subj.getClass().getName() + " member uri is not a String.");
-        }
+        final Object o = this.get(SubjectIdentifierMembers.URI.toString());
 
         URI uri;
         try {
-            uri = new URI(value);
+            uri = new URI((String)o);
         }  catch (URISyntaxException e) {
             throw new SIValidationException("DIDSubjectIdentifier member uri invalid URI.");
         }
         String scheme = uri.getScheme();
         if (null == scheme) {
-            throw new SIValidationException("DIDSubjectIdentifier member uri must begin with did: scheme.");
+            throw new SIValidationException("DIDSubjectIdentifier member uri must begin with a scheme.");
         }
         if (!scheme.equals("did")) {
-            throw new SIValidationException("AccountSubjectIdentifier member uri must have did: scheme.");
+            throw new SIValidationException("DIDSubjectIdentifier member uri must have did: scheme.");
         }
     }
 
@@ -49,10 +36,10 @@ public class DIDSubjectIdentifier extends SubjectIdentifier {
     public void validate() throws SIValidationException {
         super.validate();
         final String format = (String) get(SubjectIdentifierMembers.FORMAT.toString());
-        if (!format.equals(SubjectIdentifierFormats.DID.toString())) {
-            throw new SIValidationException("DID Subject Identifiers must have format did.");
+        if (null == format || !format.equals(SubjectIdentifierFormats.DID.toString())) {
+            throw new SIValidationException("DIDSubjectIdentifier must have format did.");
         }
-        validateUri(this);
+        validateUri();
     }
 
     public static class Builder {
@@ -71,6 +58,7 @@ public class DIDSubjectIdentifier extends SubjectIdentifier {
         }
 
         public DIDSubjectIdentifier build() {
+            members.put(SubjectIdentifierMembers.FORMAT, SubjectIdentifierFormats.DID.toString());
             return members;
         }
     }

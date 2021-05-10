@@ -22,7 +22,6 @@ public class SubjectIdentifierTests {
     @Test
     public void DIDTest1() throws ParseException {
         DIDSubjectIdentifier subj = new DIDSubjectIdentifier.Builder()
-                .format(SubjectIdentifierFormats.DID)
                 .uri("did:example:123456")
                 .build();
 
@@ -38,7 +37,6 @@ public class SubjectIdentifierTests {
     @Test
     public void DIDTest2() throws SIValidationException {
         DIDSubjectIdentifier subj = new DIDSubjectIdentifier.Builder()
-                .format(SubjectIdentifierFormats.DID)
                 .uri("did:example:123456")
                 .build();
         subj.validate();
@@ -47,7 +45,6 @@ public class SubjectIdentifierTests {
     @Test
     public void DIDTest3()  {
         DIDSubjectIdentifier subj = new DIDSubjectIdentifier.Builder()
-                .format(SubjectIdentifierFormats.DID)
                 .uri("example:123456")
                 .build();
         assertThrows(SIValidationException.class, subj::validate);
@@ -56,7 +53,6 @@ public class SubjectIdentifierTests {
     @Test
     public void DIDTest4()  {
         DIDSubjectIdentifier subj = new DIDSubjectIdentifier.Builder()
-                .format(SubjectIdentifierFormats.DID)
                 .uri("http://example:123456")
                 .build();
         assertThrows(SIValidationException.class, subj::validate);

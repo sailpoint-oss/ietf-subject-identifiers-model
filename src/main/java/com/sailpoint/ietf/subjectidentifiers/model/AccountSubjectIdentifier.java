@@ -21,23 +21,16 @@ public class AccountSubjectIdentifier extends SubjectIdentifier {
      * @throws SIValidationException - if value is improper per above
      */
     private void validateURI() throws SIValidationException {
+        validateMemberPresentNotNullNotEmptyString(SubjectIdentifierMembers.URI.toString());
+
         Object o = this.get(SubjectIdentifierMembers.URI.toString());
-        String s;
         URI uri;
-        if (null == o) {
-            throw new SIValidationException("AccountSubjectIdentifier member uri must be present.");
-        }
         if (!((o instanceof String) || (o instanceof URI))) {
             throw new SIValidationException("AccountSubjectIdentifier member uri must be a String or URI");
         }
         if (o instanceof String) {
-            s = (String) o;
-            if (s.equals("")) {
-                throw new SIValidationException("AccountSubjectIdentifier member uri must not be an empty String.");
-            }
-
             try {
-                uri = new URI(s);
+                uri = new URI((String)o);
             } catch (URISyntaxException e) {
                 throw new SIValidationException("AccountSubjectIdentifier member uri invalid URI");
             }

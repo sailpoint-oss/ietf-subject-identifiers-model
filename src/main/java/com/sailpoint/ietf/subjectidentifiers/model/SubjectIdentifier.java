@@ -48,6 +48,23 @@ public class SubjectIdentifier extends JSONObject {
         }
     }
 
+    protected void validateMemberPresentNotNullNotEmptyString(final String member) throws SIValidationException {
+        if (!this.containsKey(member)) {
+            throw new SIValidationException("SubjectIdentifier member " + member + " must be present.");
+        }
+        Object o = this.get(member);
+        if (null == o) {
+            throw new SIValidationException("SubjectIdentifier member " + member + " must be non-null.");
+        }
+        String s;
+        if (o instanceof String) {
+            s = (String) o;
+            if (s.isEmpty()) {
+                throw new SIValidationException("SubjectIdentifier member " + member + " must not be an empty String.");
+            }
+        }
+    }
+
     private void convertChildSubjects(final JSONObject subjectJO) throws SIValidationException {
         // Recursively create child SIs with specific object types
         for (Map.Entry<String, Object> entry : subjectJO.entrySet()) {

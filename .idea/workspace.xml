@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ee25ad43-bccb-48af-8ef2-5ea6d11e6d35" name="Default Changelist" comment="" />
+    <list default="true" id="ee25ad43-bccb-48af-8ef2-5ea6d11e6d35" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries-with-intellij-classes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/ietf-subject-identifiers-model.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/ietf-subject-identifiers-model.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/ietf-subject-identifiers-model.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/ietf-subject-identifiers-model.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/ietf-subject-identifiers-model.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/ietf-subject-identifiers-model.test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,7 +25,34 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view />
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="1s2cFjPDanQe0zzeQ8Ihh2gpFUs" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -23,9 +60,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
   </component>
   <component name="RecentsManager">
@@ -33,19 +73,125 @@
       <recent name="com.sailpoint.ietf.subjectidentifiers.model" />
       <recent name="com.sailpoint.ietf.subjectidentifiers" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.sailpoint.ietf.subjectidentifiers.model" />
+    </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+  <component name="RunManager" selected="Gradle.SubjectIdentifierTests.ConvertSubjectsTest">
+    <configuration name="OAuthTests.Figure1" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;com.sailpoint.ietf.subjectidentifiers.model.OAuthTests.Figure1&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
     </configuration>
+    <configuration name="SubjectIdentifierTests.AliasesTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;com.sailpoint.ietf.subjectidentifiers.model.SubjectIdentifierTests.AliasesTest&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="SubjectIdentifierTests.ConvertSubjectsTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;com.sailpoint.ietf.subjectidentifiers.model.SubjectIdentifierTests.ConvertSubjectsTest&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="SubjectIdentifierTests.EmailNegativeTest1" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;com.sailpoint.ietf.subjectidentifiers.model.SubjectIdentifierTests.EmailNegativeTest1&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="SubjectIdentifierTests.EmailNegativeTest2" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;com.sailpoint.ietf.subjectidentifiers.model.SubjectIdentifierTests.EmailNegativeTest2&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.SubjectIdentifierTests.ConvertSubjectsTest" />
+        <item itemvalue="Gradle.SubjectIdentifierTests.AliasesTest" />
+        <item itemvalue="Gradle.SubjectIdentifierTests.EmailNegativeTest2" />
+        <item itemvalue="Gradle.SubjectIdentifierTests.EmailNegativeTest1" />
+        <item itemvalue="Gradle.OAuthTests.Figure1" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -57,10 +203,114 @@
       <updated>1620073309087</updated>
       <workItem from="1620073311628" duration="640000" />
       <workItem from="1620074033249" duration="6678000" />
+      <workItem from="1620422271780" duration="23758000" />
+      <workItem from="1620679283559" duration="797000" />
     </task>
+    <task id="LOCAL-00001" summary="Add gradle instructions to README">
+      <created>1620422567741</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1620422567741</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Validation &amp; DID Builder simplification&#10;&#10;Add SI.validateMemberPresentNotNullNotEmptyString() for use in subclasses.&#10;Simplify DIDSI to more closely match other subclasses.">
+      <created>1620657020732</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1620657020732</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add .idea/.gitignore">
+      <created>1620657285715</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1620657285715</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add SI objects and tests for aliases, email, phone number; validation enhancements&#10;&#10;validate() can now throw ParseException, which flows down to all subclasses.  This lets us&#10;use JSONObjectUtils.getString() to get keys whose value is supposed to be a String (such as format).&#10;&#10;SubjectIdentifierMembers.PHONE -&gt; PHONE_NUMBER">
+      <created>1620671951515</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1620671951515</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Handle recursion through Alias SIs &amp; bare SIs&#10;&#10;Most of the SIs don't support recursive definitions, but bare SIs do (SSE needs it), as do Alias SIs in their identifiers member.">
+      <created>1620678976314</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1620678976315</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="1" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add gradle instructions to README" />
+    <MESSAGE value="Validation &amp; DID Builder simplification&#10;&#10;Add SI.validateMemberPresentNotNullNotEmptyString() for use in subclasses.&#10;Simplify DIDSI to more closely match other subclasses." />
+    <MESSAGE value="Add .idea/.gitignore" />
+    <MESSAGE value="Add SI objects and tests for aliases, email, phone number" />
+    <MESSAGE value="Add SI objects and tests for aliases, email, phone number; validation enhancements&#10;&#10;validate() can now throw ParseException, which flows down to all subclasses.  This lets us&#10;use JSONObjectUtils.getString() to get keys whose value is supposed to be a String (such as format).&#10;&#10;SubjectIdentifierMembers.PHONE -&gt; PHONE_NUMBER" />
+    <MESSAGE value="Handle recursion through Alias SIs &amp; bare SIs&#10;&#10;Most of the SIs don't support recursive definitions, but bare SIs do (SSE needs it), as do Alias SIs in their identifiers member." />
+    <option name="LAST_COMMIT_MESSAGE" value="Handle recursion through Alias SIs &amp; bare SIs&#10;&#10;Most of the SIs don't support recursive definitions, but bare SIs do (SSE needs it), as do Alias SIs in their identifiers member." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/com/sailpoint/ietf/subjectidentifiers/model/SubjectIdentifierTests.java</url>
+          <line>245</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

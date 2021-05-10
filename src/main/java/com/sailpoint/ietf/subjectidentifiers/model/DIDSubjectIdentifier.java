@@ -9,10 +9,11 @@ package com.sailpoint.ietf.subjectidentifiers.model;
 
 import java.net.URISyntaxException;
 import java.net.URI;
+import java.text.ParseException;
 
 public class DIDSubjectIdentifier extends SubjectIdentifier {
 
-    private void validateUri() throws SIValidationException {
+    private void validateUri() throws ParseException, SIValidationException {
         validateMemberPresentNotNullNotEmptyString(SubjectIdentifierMembers.URI.toString());
 
         final Object o = this.get(SubjectIdentifierMembers.URI.toString());
@@ -33,7 +34,7 @@ public class DIDSubjectIdentifier extends SubjectIdentifier {
     }
 
     @Override
-    public void validate() throws SIValidationException {
+    public void validate() throws ParseException, SIValidationException {
         super.validate();
         final String format = (String) get(SubjectIdentifierMembers.FORMAT.toString());
         if (null == format || !format.equals(SubjectIdentifierFormats.DID.toString())) {

@@ -6,6 +6,7 @@
 
 package com.sailpoint.ietf.subjectidentifiers.model;
 
+import com.nimbusds.jose.shaded.json.JSONArray;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import com.nimbusds.jose.util.JSONObjectUtils;
 import org.junit.Test;
@@ -35,7 +36,7 @@ public class SubjectIdentifierTests {
     }
 
     @Test
-    public void DIDTest2() throws SIValidationException {
+    public void DIDTest2() throws ParseException, SIValidationException {
         DIDSubjectIdentifier subj = new DIDSubjectIdentifier.Builder()
                 .uri("did:example:123456")
                 .build();
@@ -76,7 +77,7 @@ public class SubjectIdentifierTests {
     }
 
     @Test
-    public void AccountTest2() throws SIValidationException {
+    public void AccountTest2() throws ParseException, SIValidationException {
         AccountSubjectIdentifier subj = new AccountSubjectIdentifier.Builder()
                 .uri("acct:example.user@service.example.com")
                 .build();
@@ -91,6 +92,135 @@ public class SubjectIdentifierTests {
                 .uri("example.user@service.example.com")
                 .build();
         assertThrows(SIValidationException.class, subj::validate);
+    }
+
+    @Test
+    public void EmailTest() throws ParseException {
+        EmailSubjectIdentifier subj = new EmailSubjectIdentifier.Builder()
+                .email("user@example.com")
+                .build();
+
+        final String figure_text = "{\n" +
+                "  \"format\": \"email\",\n" +
+                "  \"email\": \"user@example.com\"\n" +
+                "}";
+
+        final JSONObject figureJson = new JSONObject(JSONObjectUtils.parse(figure_text));
+        assertEquals(figureJson, subj);
+    }
+
+    // no email member
+    @Test
+    public void EmailNegativeTest1() {
+        EmailSubjectIdentifier subj = new EmailSubjectIdentifier.Builder()
+                .build();
+        assertThrows(SIValidationException.class, subj::validate);
+    }
+
+    // No format member
+    @Test
+    public void EmailNegativeTest2()  {
+        EmailSubjectIdentifier subj = new EmailSubjectIdentifier.Builder()
+                .email("user@example.com")
+                .build();
+        subj.remove(SubjectIdentifierMembers.FORMAT.toString());
+        assertThrows(SIValidationException.class, subj::validate);
+    }
+
+    // Wrong format member
+    @Test
+    public void EmailNegativeTest3() {
+        EmailSubjectIdentifier subj = new EmailSubjectIdentifier.Builder()
+                .email("user@example.com")
+                .build();
+        subj.put(SubjectIdentifierMembers.FORMAT, SubjectIdentifierFormats.ACCOUNT.toString());
+        assertThrows(SIValidationException.class, subj::validate);
+    }
+
+
+    @Test
+    public void PhoneNumberTest() throws ParseException {
+        PhoneNumberSubjectIdentifier subj = new PhoneNumberSubjectIdentifier.Builder()
+                .phoneNumber("+12065550100")
+                .build();
+
+        final String figure_text = "{\n" +
+                "  \"format\": \"phone_number\",\n" +
+                "  \"phone_number\": \"+12065550100\"\n" +
+                "}";
+
+        final JSONObject figureJson = new JSONObject(JSONObjectUtils.parse(figure_text));
+        assertEquals(figureJson, subj);
+    }
+
+    // no phone_number member
+    @Test
+    public void PhoneNumberNegativeTest1() {
+        PhoneNumberSubjectIdentifier subj = new PhoneNumberSubjectIdentifier.Builder()
+                .build();
+        assertThrows(SIValidationException.class, subj::validate);
+    }
+
+    // No format member
+    @Test
+    public void PhoneNumberNegativeTest2() {
+        PhoneNumberSubjectIdentifier subj = new PhoneNumberSubjectIdentifier.Builder()
+                .phoneNumber("+12065550100")
+                .build();
+        subj.remove(SubjectIdentifierMembers.FORMAT.toString());
+        assertThrows(SIValidationException.class, subj::validate);
+    }
+
+    // Wrong format member
+    @Test
+    public void PhoneNumberNegativeTest3() {
+        PhoneNumberSubjectIdentifier subj = new PhoneNumberSubjectIdentifier.Builder()
+                .phoneNumber("+12065550100")
+                .build();
+        subj.put(SubjectIdentifierMembers.FORMAT, SubjectIdentifierFormats.ACCOUNT.toString());
+        assertThrows(SIValidationException.class, subj::validate);
+    }
+
+    @Test
+    public void AliasesTest() throws ParseException {
+        EmailSubjectIdentifier email1 = new EmailSubjectIdentifier.Builder()
+                .email("user@example.com")
+                .build();
+        PhoneNumberSubjectIdentifier phone = new PhoneNumberSubjectIdentifier.Builder()
+                .phoneNumber("+12065550100")
+                .build();
+        EmailSubjectIdentifier email2 = new EmailSubjectIdentifier.Builder()
+                .email("user+qualifier@example.com")
+                .build();
+        JSONArray a = new JSONArray();
+        a.add(email1);
+        a.add(phone);
+        a.add(email2);
+
+        AliasesSubjectIdentifier subj = new AliasesSubjectIdentifier.Builder()
+                .identifiers(a)
+                .build();
+
+        final String figure_text = "{\n" +
+                "  \"format\": \"aliases\",\n" +
+                "  \"identifiers\": [\n" +
+                "    {\n" +
+                "      \"format\": \"email\",\n" +
+                "      \"email\": \"user@example.com\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"format\": \"phone_number\",\n" +
+                "      \"phone_number\": \"+12065550100\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"format\": \"email\",\n" +
+                "      \"email\": \"user+qualifier@example.com\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
+
+        final JSONObject figureJson = new JSONObject(JSONObjectUtils.parse(figure_text));
+        assertEquals(figureJson, subj);
     }
 
 

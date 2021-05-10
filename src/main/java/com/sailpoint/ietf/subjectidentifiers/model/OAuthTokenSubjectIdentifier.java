@@ -8,6 +8,7 @@ package com.sailpoint.ietf.subjectidentifiers.model;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.ParseException;
 
 public class OAuthTokenSubjectIdentifier extends SubjectIdentifier {
 
@@ -42,9 +43,9 @@ public class OAuthTokenSubjectIdentifier extends SubjectIdentifier {
     }
 
     @Override
-    public void validate() throws SIValidationException {
-        super.validate();
-        final String subjectType = get(SubjectIdentifierMembers.SUBJECT_TYPE);
+    public void validate() throws ParseException, SIValidationException {
+        // Do not call super.validate() as this structure predates the unified spec
+        final String subjectType = getString(SubjectIdentifierMembers.SUBJECT_TYPE);
         if (!subjectType.equals(SubjectIdentifierFormats.OAUTH_TOKEN.toString())) {
             throw new SIValidationException("OAuth Token Subject Identifiers must have subject_type oauth_token.");
         }

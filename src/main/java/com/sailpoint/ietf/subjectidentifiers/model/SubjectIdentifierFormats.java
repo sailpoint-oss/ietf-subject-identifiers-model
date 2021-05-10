@@ -13,10 +13,10 @@ public enum SubjectIdentifierFormats {
 
     // https://github.com/richanna/secevent/blob/master/draft-ietf-secevent-subject-identifiers.txt
     ACCOUNT("account", AccountSubjectIdentifier.class),
-    EMAIL("email"),
-    PHONE_NUMBER("phone_number"),
+    EMAIL("email", EmailSubjectIdentifier.class),
+    PHONE_NUMBER("phone_number", PhoneNumberSubjectIdentifier.class),
     ISSUER_SUBJECT("iss_sub", IssSubSubjectIdentifier.class),
-    ALIASES("aliases"),
+    ALIASES("aliases", AliasesSubjectIdentifier.class),
 
     JWT_ID("jwt_id"),
     SAML_ASSERTION_ID("saml_assertion_id"),

@@ -15,7 +15,7 @@ public enum SubjectIdentifierMembers {
     ISSUER("iss"),
     SUBJECT("sub"),
     EMAIL("email"),
-    PHONE("phone_number"),
+    PHONE_NUMBER("phone_number"),
     JWT_ID("jti"),
     SAML_ISSUER("issuer"),
     SAML_ASSERTION_ID("assertion_id"),
@@ -27,6 +27,7 @@ public enum SubjectIdentifierMembers {
     ORG_UNIT("org-unit"),
     GROUP("group"),
     ID("id"),
+    IDENTIFIERS("identifiers"),
 
     //https://bitbucket.org/openid/risc/src/master/oauth-event-types-1_0.txt
     SUBJECT_TYPE("subject_type"),

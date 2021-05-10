@@ -9,6 +9,7 @@ package com.sailpoint.ietf.subjectidentifiers.model;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 
 public class AccountSubjectIdentifier extends SubjectIdentifier {
 
@@ -21,10 +22,11 @@ public class AccountSubjectIdentifier extends SubjectIdentifier {
      * @throws SIValidationException - if value is improper per above
      */
     private void validateURI() throws SIValidationException {
-        validateMemberPresentNotNullNotEmptyString(SubjectIdentifierMembers.URI.toString());
-
         Object o = this.get(SubjectIdentifierMembers.URI.toString());
         URI uri;
+        if (null == o) {
+            throw new SIValidationException("AccountSubjectIdentifier member uri cannot be null");
+        }
         if (!((o instanceof String) || (o instanceof URI))) {
             throw new SIValidationException("AccountSubjectIdentifier member uri must be a String or URI");
         }
@@ -48,7 +50,7 @@ public class AccountSubjectIdentifier extends SubjectIdentifier {
     }
 
     @Override
-    public void validate() throws SIValidationException {
+    public void validate() throws ParseException, SIValidationException {
         super.validate();
         validateURI();
     }

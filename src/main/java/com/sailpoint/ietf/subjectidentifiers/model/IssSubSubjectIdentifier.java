@@ -9,10 +9,18 @@ package com.sailpoint.ietf.subjectidentifiers.model;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 
 public class IssSubSubjectIdentifier extends SubjectIdentifier {
 
     /**
+     *
+     * The Issuer and Subject Identifier Format identifies a subject using a pair of iss and sub members, analagous
+     * to how subjects are identified using the iss and sub claims in OpenID Connect ID Tokens. These members MUST
+     * follow the formats of the iss member and sub member defined by {{!RFC7519}}, respectively. Both the iss member
+     * and the sub member are REQUIRED and MUST NOT be null or empty. The Issuer and Subject Identifier Format is
+     * identified by the name iss_sub.
+     *
      * https://tools.ietf.org/html/rfc7519
      * StringOrURI
      *       A JSON string value, with the additional requirement that while
@@ -24,21 +32,15 @@ public class IssSubSubjectIdentifier extends SubjectIdentifier {
      * @param member - Map key
      * @throws SIValidationException - if value is improper per above
      */
-    private void validateStringOrURI(final String member) throws SIValidationException {
+    private void validateStringOrURI(final String member) throws ParseException, SIValidationException {
+        validateMemberPresentNotNullNotEmptyString(member);
         Object o = this.get(member);
         String s;
-        if (null == o) {
-            throw new SIValidationException("IssSubSubjectIdentifier member " + member + " must be present.");
-        }
         if (!((o instanceof String) || (o instanceof URI))) {
             throw new SIValidationException("IssSubSubjectIdentifier member " + member + " must be a String or URI");
         }
         if (o instanceof String) {
             s = (String) o;
-            if (s.equals("")) {
-                throw new SIValidationException("IssSubSubjectIdentifier member " + member + " must not be an empty String.");
-            }
-
             if (s.indexOf(':') < 0) return; // No :, not a URI. Plain strings are OK.
 
             try {
@@ -50,7 +52,7 @@ public class IssSubSubjectIdentifier extends SubjectIdentifier {
     }
 
     @Override
-    public void validate() throws SIValidationException {
+    public void validate() throws ParseException, SIValidationException {
         super.validate();
         validateStringOrURI(SubjectIdentifierMembers.SUBJECT.toString());
         validateStringOrURI(SubjectIdentifierMembers.ISSUER.toString());

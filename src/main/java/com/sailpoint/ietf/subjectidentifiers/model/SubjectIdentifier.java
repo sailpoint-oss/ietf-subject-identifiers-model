@@ -7,27 +7,27 @@
 package com.sailpoint.ietf.subjectidentifiers.model;
 
 import com.nimbusds.jose.shaded.json.JSONObject;
+import com.nimbusds.jose.util.JSONObjectUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.Map;
 
 public class SubjectIdentifier extends JSONObject {
 
-    public final String get(SubjectIdentifierMembers member) {
-        final String s = member.toString();
-        return (String) this.get(s);
+    public final String getString(SubjectIdentifierMembers member) throws ParseException {
+        return JSONObjectUtils.getString(this, member.toString());
     }
 
     public void put(final SubjectIdentifierMembers member, final Object o) {
-        final String s = member.toString();
-        this.put(s, o);
+        this.put(member.toString(), o);
     }
 
-    public void validateFormat() throws SIValidationException {
-        final String format = this.get(SubjectIdentifierMembers.FORMAT);
+    public void validateFormat() throws ParseException, SIValidationException {
+        final String format = getString(SubjectIdentifierMembers.FORMAT);
         if (null == format) {
-            return;
+            throw new SIValidationException("SubjectIdentifier member format must be present and non-null.");
         }
         if (SubjectIdentifierFormats.contains(format) || format.startsWith("x-")) {
             return;
@@ -36,7 +36,7 @@ public class SubjectIdentifier extends JSONObject {
                 + "must be defined by specification or begin with x-.");
     }
 
-    public void validate() throws SIValidationException {
+    public void validate() throws ParseException, SIValidationException {
         validateFormat();
 
         // Subject Identifiers can be complex (thus recursive)
@@ -48,24 +48,17 @@ public class SubjectIdentifier extends JSONObject {
         }
     }
 
-    protected void validateMemberPresentNotNullNotEmptyString(final String member) throws SIValidationException {
-        if (!this.containsKey(member)) {
-            throw new SIValidationException("SubjectIdentifier member " + member + " must be present.");
+    protected void validateMemberPresentNotNullNotEmptyString(final String member) throws ParseException, SIValidationException {
+        String s = JSONObjectUtils.getString(this, member);
+        if (null == s) {
+            throw new SIValidationException("SubjectIdentifier member " + member + " must not be null.");
         }
-        Object o = this.get(member);
-        if (null == o) {
-            throw new SIValidationException("SubjectIdentifier member " + member + " must be non-null.");
-        }
-        String s;
-        if (o instanceof String) {
-            s = (String) o;
-            if (s.isEmpty()) {
-                throw new SIValidationException("SubjectIdentifier member " + member + " must not be an empty String.");
-            }
+        if (s.isEmpty()) {
+            throw new SIValidationException("SubjectIdentifier member " + member + " must not be an empty String.");
         }
     }
 
-    private void convertChildSubjects(final JSONObject subjectJO) throws SIValidationException {
+    private void convertChildSubjects(final JSONObject subjectJO) throws ParseException, SIValidationException {
         // Recursively create child SIs with specific object types
         for (Map.Entry<String, Object> entry : subjectJO.entrySet()) {
             String k = entry.getKey();
@@ -104,7 +97,7 @@ public class SubjectIdentifier extends JSONObject {
         }
     }
 
-    public static SubjectIdentifier convertSubjects(final JSONObject subjectJO) throws SIValidationException {
+    public static SubjectIdentifier convertSubjects(final JSONObject subjectJO) throws ParseException, SIValidationException {
         if (null == subjectJO) { return null; }
 
         SubjectIdentifier subj = constructSubjectIdentifier(subjectJO);
@@ -123,8 +116,8 @@ public class SubjectIdentifier extends JSONObject {
             return this;
         }
 
-        public Builder issuer(final String iss) {
-            final String subjectTypeMember = members.get(SubjectIdentifierMembers.FORMAT);
+        public Builder issuer(final String iss) throws ParseException {
+            final String subjectTypeMember = members.getString(SubjectIdentifierMembers.FORMAT);
             if (SubjectIdentifierFormats.SAML_ASSERTION_ID.equalsName(subjectTypeMember)) {
                 members.put(SubjectIdentifierMembers.SAML_ISSUER, iss);
             } else {
@@ -142,12 +135,6 @@ public class SubjectIdentifier extends JSONObject {
         public Builder email(final String email) {
 
             members.put(SubjectIdentifierMembers.EMAIL, email);
-            return this;
-        }
-
-        public Builder phoneNumber(final String phoneNumber) {
-
-            members.put(SubjectIdentifierMembers.PHONE, phoneNumber);
             return this;
         }
 

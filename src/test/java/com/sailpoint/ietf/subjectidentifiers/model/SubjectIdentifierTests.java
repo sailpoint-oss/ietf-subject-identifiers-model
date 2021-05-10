@@ -9,12 +9,11 @@ package com.sailpoint.ietf.subjectidentifiers.model;
 import com.nimbusds.jose.shaded.json.JSONArray;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import com.nimbusds.jose.util.JSONObjectUtils;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.text.ParseException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
 public class SubjectIdentifierTests {
     /*
@@ -32,7 +31,7 @@ public class SubjectIdentifierTests {
                 "}";
 
         final JSONObject figureJson = new JSONObject(JSONObjectUtils.parse(figure_text));
-        assertEquals(figureJson, subj);
+        Assert.assertEquals(figureJson, subj);
     }
 
     @Test
@@ -48,7 +47,7 @@ public class SubjectIdentifierTests {
         DIDSubjectIdentifier subj = new DIDSubjectIdentifier.Builder()
                 .uri("example:123456")
                 .build();
-        assertThrows(SIValidationException.class, subj::validate);
+        Assert.assertThrows(SIValidationException.class, subj::validate);
     }
 
     @Test
@@ -56,7 +55,7 @@ public class SubjectIdentifierTests {
         DIDSubjectIdentifier subj = new DIDSubjectIdentifier.Builder()
                 .uri("http://example:123456")
                 .build();
-        assertThrows(SIValidationException.class, subj::validate);
+        Assert.assertThrows(SIValidationException.class, subj::validate);
     }
 
 
@@ -73,7 +72,7 @@ public class SubjectIdentifierTests {
                 "}";
 
         final JSONObject figureJson = new JSONObject(JSONObjectUtils.parse(figure_text));
-        assertEquals(figureJson, subj);
+        Assert.assertEquals(figureJson, subj);
     }
 
     @Test
@@ -91,7 +90,7 @@ public class SubjectIdentifierTests {
         AccountSubjectIdentifier subj = new AccountSubjectIdentifier.Builder()
                 .uri("example.user@service.example.com")
                 .build();
-        assertThrows(SIValidationException.class, subj::validate);
+        Assert.assertThrows(SIValidationException.class, subj::validate);
     }
 
     @Test
@@ -106,7 +105,7 @@ public class SubjectIdentifierTests {
                 "}";
 
         final JSONObject figureJson = new JSONObject(JSONObjectUtils.parse(figure_text));
-        assertEquals(figureJson, subj);
+        Assert.assertEquals(figureJson, subj);
     }
 
     // no email member
@@ -114,7 +113,7 @@ public class SubjectIdentifierTests {
     public void EmailNegativeTest1() {
         EmailSubjectIdentifier subj = new EmailSubjectIdentifier.Builder()
                 .build();
-        assertThrows(SIValidationException.class, subj::validate);
+        Assert.assertThrows(SIValidationException.class, subj::validate);
     }
 
     // No format member
@@ -124,7 +123,7 @@ public class SubjectIdentifierTests {
                 .email("user@example.com")
                 .build();
         subj.remove(SubjectIdentifierMembers.FORMAT.toString());
-        assertThrows(SIValidationException.class, subj::validate);
+        Assert.assertThrows(SIValidationException.class, subj::validate);
     }
 
     // Wrong format member
@@ -134,7 +133,7 @@ public class SubjectIdentifierTests {
                 .email("user@example.com")
                 .build();
         subj.put(SubjectIdentifierMembers.FORMAT, SubjectIdentifierFormats.ACCOUNT.toString());
-        assertThrows(SIValidationException.class, subj::validate);
+        Assert.assertThrows(SIValidationException.class, subj::validate);
     }
 
 
@@ -150,7 +149,7 @@ public class SubjectIdentifierTests {
                 "}";
 
         final JSONObject figureJson = new JSONObject(JSONObjectUtils.parse(figure_text));
-        assertEquals(figureJson, subj);
+        Assert.assertEquals(figureJson, subj);
     }
 
     // no phone_number member
@@ -158,7 +157,7 @@ public class SubjectIdentifierTests {
     public void PhoneNumberNegativeTest1() {
         PhoneNumberSubjectIdentifier subj = new PhoneNumberSubjectIdentifier.Builder()
                 .build();
-        assertThrows(SIValidationException.class, subj::validate);
+        Assert.assertThrows(SIValidationException.class, subj::validate);
     }
 
     // No format member
@@ -168,7 +167,7 @@ public class SubjectIdentifierTests {
                 .phoneNumber("+12065550100")
                 .build();
         subj.remove(SubjectIdentifierMembers.FORMAT.toString());
-        assertThrows(SIValidationException.class, subj::validate);
+        Assert.assertThrows(SIValidationException.class, subj::validate);
     }
 
     // Wrong format member
@@ -178,7 +177,7 @@ public class SubjectIdentifierTests {
                 .phoneNumber("+12065550100")
                 .build();
         subj.put(SubjectIdentifierMembers.FORMAT, SubjectIdentifierFormats.ACCOUNT.toString());
-        assertThrows(SIValidationException.class, subj::validate);
+        Assert.assertThrows(SIValidationException.class, subj::validate);
     }
 
     @Test
@@ -220,8 +219,34 @@ public class SubjectIdentifierTests {
                 "}";
 
         final JSONObject figureJson = new JSONObject(JSONObjectUtils.parse(figure_text));
-        assertEquals(figureJson, subj);
+        Assert.assertEquals(figureJson, subj);
     }
 
+    @Test
+    public void ConvertSubjectsTest() throws ParseException, SIValidationException {
+        final String figure_text = "{\n" +
+                "  \"format\": \"aliases\",\n" +
+                "  \"identifiers\": [\n" +
+                "    {\n" +
+                "      \"format\": \"email\",\n" +
+                "      \"email\": \"user@example.com\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"format\": \"phone_number\",\n" +
+                "      \"phone_number\": \"+12065550100\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"format\": \"email\",\n" +
+                "      \"email\": \"user+qualifier@example.com\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
 
+        final JSONObject figureJson = new JSONObject(JSONObjectUtils.parse(figure_text));
+        SubjectIdentifier subj = SubjectIdentifier.convertSubjects(figureJson);
+        JSONArray identifiers = (JSONArray) subj.get(SubjectIdentifierMembers.IDENTIFIERS.toString());
+        Assert.assertTrue(identifiers.get(0) instanceof EmailSubjectIdentifier);
+        Assert.assertTrue(identifiers.get(1) instanceof PhoneNumberSubjectIdentifier);
+        Assert.assertTrue(identifiers.get(2) instanceof EmailSubjectIdentifier);
+    }
 }

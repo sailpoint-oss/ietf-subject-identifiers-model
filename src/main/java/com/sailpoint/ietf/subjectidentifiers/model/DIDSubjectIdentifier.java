@@ -7,6 +7,8 @@
 package com.sailpoint.ietf.subjectidentifiers.model;
 
 
+import com.nimbusds.jose.shaded.json.JSONObject;
+
 import java.net.URISyntaxException;
 import java.net.URI;
 import java.text.ParseException;
@@ -41,6 +43,11 @@ public class DIDSubjectIdentifier extends SubjectIdentifier {
             throw new SIValidationException("DIDSubjectIdentifier must have format did.");
         }
         validateUri();
+    }
+
+    @Override
+    protected void convertChildSubjects(final JSONObject subjectJO) {
+        // no op
     }
 
     public static class Builder {

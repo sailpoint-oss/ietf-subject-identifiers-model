@@ -7,6 +7,8 @@
 package com.sailpoint.ietf.subjectidentifiers.model;
 
 
+import com.nimbusds.jose.shaded.json.JSONObject;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
@@ -56,6 +58,11 @@ public class IssSubSubjectIdentifier extends SubjectIdentifier {
         super.validate();
         validateStringOrURI(SubjectIdentifierMembers.SUBJECT.toString());
         validateStringOrURI(SubjectIdentifierMembers.ISSUER.toString());
+    }
+
+    @Override
+    protected void convertChildSubjects(final JSONObject subjectJO) {
+        // no op
     }
 
     public static class Builder {

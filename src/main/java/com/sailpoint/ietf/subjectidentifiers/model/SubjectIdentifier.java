@@ -58,7 +58,7 @@ public class SubjectIdentifier extends JSONObject {
         }
     }
 
-    private void convertChildSubjects(final JSONObject subjectJO) throws ParseException, SIValidationException {
+    protected void convertChildSubjects(final JSONObject subjectJO) throws ParseException, SIValidationException {
         // Recursively create child SIs with specific object types
         for (Map.Entry<String, Object> entry : subjectJO.entrySet()) {
             String k = entry.getKey();

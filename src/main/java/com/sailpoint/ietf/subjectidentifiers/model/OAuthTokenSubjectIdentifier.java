@@ -6,6 +6,8 @@
 
 package com.sailpoint.ietf.subjectidentifiers.model;
 
+import com.nimbusds.jose.shaded.json.JSONObject;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -53,6 +55,10 @@ public class OAuthTokenSubjectIdentifier extends SubjectIdentifier {
         validateSubjectIdentifierMember(this, SubjectIdentifierMembers.TOKEN_IDENTIFIER_ALG, OAuthTokenIdentifierAlg.class);
         validateSubjectIdentifierMember(this, SubjectIdentifierMembers.TOKEN, String.class);
 
+    }
+    @Override
+    protected void convertChildSubjects(final JSONObject subjectJO) {
+        // no op
     }
 
     public static class Builder {

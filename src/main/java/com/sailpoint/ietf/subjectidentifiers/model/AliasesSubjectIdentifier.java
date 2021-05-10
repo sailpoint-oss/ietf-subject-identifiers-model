@@ -8,6 +8,8 @@ package com.sailpoint.ietf.subjectidentifiers.model;
 
 
 import com.nimbusds.jose.shaded.json.JSONArray;
+import com.nimbusds.jose.shaded.json.JSONObject;
+
 import java.text.ParseException;
 
 public class AliasesSubjectIdentifier extends SubjectIdentifier {
@@ -48,13 +50,33 @@ public class AliasesSubjectIdentifier extends SubjectIdentifier {
         }
         JSONArray identifiers = (JSONArray) o;
         // Items in this array are other subject identifiers
-        // Validate each of them.  FIXME - this may be recursive, though not all SIs are allowed to be recursive.
+        // Validate each of them.
         for (Object si : identifiers) {
             if (si instanceof SubjectIdentifier) {
                 ((SubjectIdentifier)si).validate();
             }
         }
     }
+
+    @Override
+    protected void convertChildSubjects(final JSONObject subjectJO) throws ParseException, SIValidationException {
+        // Recursively create child SIs with specific object types
+        Object o = this.get(SubjectIdentifierMembers.IDENTIFIERS.toString());
+        if (!(o instanceof JSONArray)) {
+            return;
+        }
+        JSONArray identifiers = (JSONArray) o;
+        // Items in this array are other subject identifiers
+        // Replace each of them.
+        int index;
+        for (index = 0; index < identifiers.size(); index++) {
+            Object item = identifiers.get(index);
+            if (item instanceof JSONObject) {
+                identifiers.set(index, SubjectIdentifier.convertSubjects((JSONObject) item));
+            }
+        }
+    }
+
 
     public static class Builder {
 

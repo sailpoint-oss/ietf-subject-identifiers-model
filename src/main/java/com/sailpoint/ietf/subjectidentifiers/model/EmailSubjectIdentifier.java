@@ -6,6 +6,8 @@
 
 package com.sailpoint.ietf.subjectidentifiers.model;
 
+import com.nimbusds.jose.shaded.json.JSONObject;
+
 import java.text.ParseException;
 
 public class EmailSubjectIdentifier extends SubjectIdentifier {
@@ -32,6 +34,12 @@ public class EmailSubjectIdentifier extends SubjectIdentifier {
 
         validateMemberPresentNotNullNotEmptyString(SubjectIdentifierMembers.EMAIL.toString());
     }
+
+    @Override
+    protected void convertChildSubjects(final JSONObject subjectJO) {
+        // no op
+    }
+
 
     public static class Builder {
 

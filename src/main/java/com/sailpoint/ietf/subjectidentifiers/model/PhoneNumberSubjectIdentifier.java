@@ -7,6 +7,8 @@
 package com.sailpoint.ietf.subjectidentifiers.model;
 
 
+import com.nimbusds.jose.shaded.json.JSONObject;
+
 import java.text.ParseException;
 
 public class PhoneNumberSubjectIdentifier extends SubjectIdentifier {
@@ -33,6 +35,11 @@ public class PhoneNumberSubjectIdentifier extends SubjectIdentifier {
 
         validateMemberPresentNotNullNotEmptyString(SubjectIdentifierMembers.PHONE_NUMBER.toString());
         // TODO: Validate that the phone number string is proper per E.164
+    }
+
+    @Override
+    protected void convertChildSubjects(final JSONObject subjectJO) {
+        // no op
     }
 
     public static class Builder {

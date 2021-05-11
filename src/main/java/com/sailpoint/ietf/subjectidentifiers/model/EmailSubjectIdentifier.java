@@ -28,7 +28,7 @@ public class EmailSubjectIdentifier extends SubjectIdentifier {
         validateMemberPresentNotNullNotEmptyString(SubjectIdentifierMembers.FORMAT.toString());
 
         String format = this.getString(SubjectIdentifierMembers.FORMAT);
-        if (!(format.equals(SubjectIdentifierFormats.EMAIL.toString()))) {
+        if (null == format || !(format.equals(SubjectIdentifierFormats.EMAIL.toString()))) {
             throw new SIValidationException("EmailSubjectIdentifier format must be email");
         }
 

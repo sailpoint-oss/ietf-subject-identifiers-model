@@ -9,7 +9,6 @@ package com.sailpoint.ietf.subjectidentifiers.model;
 
 import com.nimbusds.jose.shaded.json.JSONArray;
 import com.nimbusds.jose.shaded.json.JSONObject;
-import com.nimbusds.jose.util.JSONObjectUtils;
 
 import java.text.ParseException;
 
@@ -37,7 +36,7 @@ public class AliasesSubjectIdentifier extends SubjectIdentifier {
         validateMemberPresentNotNullNotEmptyString(SubjectIdentifierMembers.FORMAT.toString());
 
         String format = this.getString(SubjectIdentifierMembers.FORMAT);
-        if (!(format.equals(SubjectIdentifierFormats.ALIASES.toString()))) {
+        if (null == format || !(format.equals(SubjectIdentifierFormats.ALIASES.toString()))) {
             throw new SIValidationException("AliasesSubjectIdentifier format must be aliases");
         }
 
@@ -58,10 +57,11 @@ public class AliasesSubjectIdentifier extends SubjectIdentifier {
         for (Object si : identifiers) {
             if (si instanceof SubjectIdentifier) {
                 // Alias SIs cannot be recursive
-                if (JSONObjectUtils.getString((JSONObject)si, SubjectIdentifierMembers.FORMAT.toString())
-                        .equals(SubjectIdentifierFormats.ALIASES.toString()))
+                SubjectIdentifier subj = (SubjectIdentifier) si;
+                String childFormat = subj.getString(SubjectIdentifierMembers.FORMAT);
+                 if (null == childFormat || childFormat.equals(SubjectIdentifierFormats.ALIASES.toString()))
                     throw new SIValidationException("AliasesSubjectIdentifier identifiers member must not be an AliasSI.");
-                ((SubjectIdentifier)si).validate();
+                subj.validate();
             }
         }
     }

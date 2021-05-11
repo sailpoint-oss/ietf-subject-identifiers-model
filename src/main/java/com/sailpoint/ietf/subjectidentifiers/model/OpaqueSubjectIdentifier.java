@@ -8,7 +8,6 @@ package com.sailpoint.ietf.subjectidentifiers.model;
 
 
 import com.nimbusds.jose.shaded.json.JSONObject;
-import com.nimbusds.jose.util.JSONObjectUtils;
 
 import java.text.ParseException;
 
@@ -17,13 +16,13 @@ public class OpaqueSubjectIdentifier extends SubjectIdentifier {
     @Override
     public void validate() throws ParseException, SIValidationException {
         super.validate();
-        final String format = (String) get(SubjectIdentifierMembers.FORMAT.toString());
-        if (null == format || !format.equals(SubjectIdentifierFormats.DID.toString())) {
+        final String format = getString(SubjectIdentifierMembers.FORMAT);
+        if (null == format || !format.equals(SubjectIdentifierFormats.OPAQUE.toString())) {
             throw new SIValidationException("OpaqueSubjectIdentifier must have format opaque.");
         }
-        final String id = JSONObjectUtils.getString(this, SubjectIdentifierMembers.ID.toString());
-        if (id.isEmpty()) {
-            throw new SIValidationException("OpaqueSubjectIdentifier member id must be a non-empty String.");
+        final String id = getString(SubjectIdentifierMembers.ID);
+        if (null == id || id.isEmpty()) {
+            throw new SIValidationException("OpaqueSubjectIdentifier member id must be non-null and a non-empty String.");
         }
     }
 

@@ -19,7 +19,7 @@ public class OAuthTokenSubjectIdentifier extends SubjectIdentifier {
     private static void validateSubjectIdentifierMember(final SubjectIdentifier subj, final SubjectIdentifierMembers member, final Class<?> memberCls) throws SIValidationException {
         final Object o = subj.get(member.toString());
         if (null == o) {
-            throw new SIValidationException(subj.getClass().getName() + " member " + member.toString() + " is missing or null.");
+            throw new SIValidationException(subj.getClass().getName() + " member " + member + " is missing or null.");
         }
         // Strings don't have contains(). So any string is valid.
         if (memberCls == String.class) return;
@@ -48,7 +48,7 @@ public class OAuthTokenSubjectIdentifier extends SubjectIdentifier {
     public void validate() throws ParseException, SIValidationException {
         // Do not call super.validate() as this structure predates the unified spec
         final String subjectType = getString(SubjectIdentifierMembers.SUBJECT_TYPE);
-        if (!subjectType.equals(SubjectIdentifierFormats.OAUTH_TOKEN.toString())) {
+        if (null == subjectType || !subjectType.equals(SubjectIdentifierFormats.OAUTH_TOKEN.toString())) {
             throw new SIValidationException("OAuth Token Subject Identifiers must have subject_type oauth_token.");
         }
         validateSubjectIdentifierMember(this, SubjectIdentifierMembers.TOKEN_TYPE, OAuthTokenType.class);

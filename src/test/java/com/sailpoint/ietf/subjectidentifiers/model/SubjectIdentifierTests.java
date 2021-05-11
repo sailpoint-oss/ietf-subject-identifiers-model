@@ -314,7 +314,7 @@ public class SubjectIdentifierTests {
         final OpaqueSubjectIdentifier subj = new OpaqueSubjectIdentifier.Builder()
                 .build();
         subj.put("id", 1234L);
-        Assert.assertThrows(SIValidationException.class, subj::validate);
+        Assert.assertThrows(ParseException.class, subj::validate);
     }
 
     // No format member

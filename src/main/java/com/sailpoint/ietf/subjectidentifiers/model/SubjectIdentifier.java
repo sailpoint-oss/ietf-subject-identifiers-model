@@ -116,9 +116,12 @@ public class SubjectIdentifier extends JSONObject {
             return this;
         }
 
-        public Builder issuer(final String iss) throws ParseException {
-            final String subjectTypeMember = members.getString(SubjectIdentifierMembers.FORMAT);
-            if (SubjectIdentifierFormats.SAML_ASSERTION_ID.equalsName(subjectTypeMember)) {
+        public Builder issuer(final String iss) throws ParseException, SIValidationException {
+            final String format = members.getString(SubjectIdentifierMembers.FORMAT);
+            if (null == format) {
+                throw new SIValidationException("SubjectIdentifier member format is missing or null.");
+            }
+            if (SubjectIdentifierFormats.SAML_ASSERTION_ID.equalsName(format)) {
                 members.put(SubjectIdentifierMembers.SAML_ISSUER, iss);
             } else {
                 members.put(SubjectIdentifierMembers.ISSUER, iss);

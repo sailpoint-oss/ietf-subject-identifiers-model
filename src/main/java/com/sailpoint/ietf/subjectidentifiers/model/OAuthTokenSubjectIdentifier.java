@@ -14,8 +14,6 @@ import java.text.ParseException;
 
 public class OAuthTokenSubjectIdentifier extends SubjectIdentifier {
 
-
-
     private static void validateSubjectIdentifierMember(final SubjectIdentifier subj, final SubjectIdentifierMembers member, final Class<?> memberCls) throws SIValidationException {
         final Object o = subj.get(member.toString());
         if (null == o) {
@@ -48,7 +46,7 @@ public class OAuthTokenSubjectIdentifier extends SubjectIdentifier {
     public void validate() throws ParseException, SIValidationException {
         // Do not call super.validate() as this structure predates the unified spec
         final String subjectType = getString(SubjectIdentifierMembers.SUBJECT_TYPE);
-        if (null == subjectType || !subjectType.equals(SubjectIdentifierFormats.OAUTH_TOKEN.toString())) {
+        if (!(SubjectIdentifierFormats.OAUTH_TOKEN.toString().equals(subjectType))) {
             throw new SIValidationException("OAuth Token Subject Identifiers must have subject_type oauth_token.");
         }
         validateSubjectIdentifierMember(this, SubjectIdentifierMembers.TOKEN_TYPE, OAuthTokenType.class);
@@ -91,6 +89,3 @@ public class OAuthTokenSubjectIdentifier extends SubjectIdentifier {
 
     }
 }
-
-
-

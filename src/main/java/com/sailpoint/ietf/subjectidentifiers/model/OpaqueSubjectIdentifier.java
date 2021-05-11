@@ -17,7 +17,7 @@ public class OpaqueSubjectIdentifier extends SubjectIdentifier {
     public void validate() throws ParseException, SIValidationException {
         super.validate();
         final String format = getString(SubjectIdentifierMembers.FORMAT);
-        if (null == format || !format.equals(SubjectIdentifierFormats.OPAQUE.toString())) {
+        if (!(SubjectIdentifierFormats.OPAQUE.toString().equals(format))) {
             throw new SIValidationException("OpaqueSubjectIdentifier must have format opaque.");
         }
         final String id = getString(SubjectIdentifierMembers.ID);

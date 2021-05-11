@@ -33,10 +33,8 @@ public class AliasesSubjectIdentifier extends SubjectIdentifier {
     public void validate() throws ParseException, SIValidationException {
         super.validate();
 
-        validateMemberPresentNotNullNotEmptyString(SubjectIdentifierMembers.FORMAT.toString());
-
         String format = this.getString(SubjectIdentifierMembers.FORMAT);
-        if (null == format || !(format.equals(SubjectIdentifierFormats.ALIASES.toString()))) {
+        if (!(SubjectIdentifierFormats.ALIASES.toString().equals(format))) {
             throw new SIValidationException("AliasesSubjectIdentifier format must be aliases");
         }
 
@@ -59,7 +57,7 @@ public class AliasesSubjectIdentifier extends SubjectIdentifier {
                 // Alias SIs cannot be recursive
                 SubjectIdentifier subj = (SubjectIdentifier) si;
                 String childFormat = subj.getString(SubjectIdentifierMembers.FORMAT);
-                 if (null == childFormat || childFormat.equals(SubjectIdentifierFormats.ALIASES.toString()))
+                 if (!(SubjectIdentifierFormats.ALIASES.toString().equals(childFormat)))
                     throw new SIValidationException("AliasesSubjectIdentifier identifiers member must not be an AliasSI.");
                 subj.validate();
             }

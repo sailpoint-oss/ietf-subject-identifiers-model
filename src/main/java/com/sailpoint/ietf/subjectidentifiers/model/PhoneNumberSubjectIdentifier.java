@@ -26,10 +26,8 @@ public class PhoneNumberSubjectIdentifier extends SubjectIdentifier {
     public void validate() throws ParseException, SIValidationException {
         super.validate();
 
-        validateMemberPresentNotNullNotEmptyString(SubjectIdentifierMembers.FORMAT.toString());
-
         String format = this.getString(SubjectIdentifierMembers.FORMAT);
-        if (null == format || !(format.equals(SubjectIdentifierFormats.PHONE_NUMBER.toString()))) {
+        if (!(SubjectIdentifierFormats.PHONE_NUMBER.toString().equals(format))) {
             throw new SIValidationException("PhoneNumberSubjectIdentifier format must be phone_number");
         }
 

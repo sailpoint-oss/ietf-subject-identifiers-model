@@ -37,7 +37,8 @@ public class SubjectIdentifier extends JSONObject {
     }
 
     public void validate() throws ParseException, SIValidationException {
-        validateFormat();
+        // No call to validateFormat() here because OpenID SSE Complex Subject Identifiers
+        // do not include a format member.
 
         // Subject Identifiers can be complex (thus recursive)
         for (Entry<String, Object> entry : entrySet()) {
@@ -116,11 +117,8 @@ public class SubjectIdentifier extends JSONObject {
             return this;
         }
 
-        public Builder issuer(final String iss) throws ParseException, SIValidationException {
+        public Builder issuer(final String iss) throws ParseException {
             final String format = members.getString(SubjectIdentifierMembers.FORMAT);
-            if (null == format) {
-                throw new SIValidationException("SubjectIdentifier member format is missing or null.");
-            }
             if (SubjectIdentifierFormats.SAML_ASSERTION_ID.equalsName(format)) {
                 members.put(SubjectIdentifierMembers.SAML_ISSUER, iss);
             } else {

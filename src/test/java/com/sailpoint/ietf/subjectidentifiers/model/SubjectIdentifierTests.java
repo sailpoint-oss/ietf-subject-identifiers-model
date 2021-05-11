@@ -12,6 +12,7 @@ import com.nimbusds.jose.util.JSONObjectUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.swing.plaf.OptionPaneUI;
 import java.text.ParseException;
 
 
@@ -251,7 +252,7 @@ public class SubjectIdentifierTests {
     }
 
     @Test
-    public void ConvertAliasesSubjectsNegativeTest() throws ParseException, SIValidationException {
+    public void ConvertAliasesSubjectsNegativeTest() throws ParseException {
         final String figure_text = "{\n" +
                 "  \"format\": \"aliases\",\n" +
                 "  \"identifiers\": [\n" +
@@ -273,5 +274,56 @@ public class SubjectIdentifierTests {
 
         final JSONObject figureJson = new JSONObject(JSONObjectUtils.parse(figure_text));
         Assert.assertThrows(SIValidationException.class, () -> SubjectIdentifier.convertSubjects(figureJson));
+    }
+
+    @Test
+    public void OpaqueSubjectsTest() throws ParseException {
+        final OpaqueSubjectIdentifier subj = new OpaqueSubjectIdentifier.Builder()
+                .id("11112222333344445555")
+                .build();
+
+        final String figure_text = "{\n" +
+                "  \"format\": \"opaque\",\n" +
+                "  \"id\": \"11112222333344445555\"\n" +
+                "}";
+
+        final JSONObject figureJson = new JSONObject(JSONObjectUtils.parse(figure_text));
+        Assert.assertEquals(figureJson, subj);
+    }
+
+    // No id member
+    @Test
+    public void OpaqueSubjectsNegativeTest1()  {
+        final OpaqueSubjectIdentifier subj = new OpaqueSubjectIdentifier.Builder()
+                .build();
+        Assert.assertThrows(SIValidationException.class, subj::validate);
+    }
+
+    // Empty string id member
+    @Test
+    public void OpaqueSubjectsNegativeTest2()  {
+        final OpaqueSubjectIdentifier subj = new OpaqueSubjectIdentifier.Builder()
+                .id("")
+                .build();
+        Assert.assertThrows(SIValidationException.class, subj::validate);
+    }
+
+    // id member not a string
+    @Test
+    public void OpaqueSubjectsNegativeTest3()  {
+        final OpaqueSubjectIdentifier subj = new OpaqueSubjectIdentifier.Builder()
+                .build();
+        subj.put("id", 1234L);
+        Assert.assertThrows(SIValidationException.class, subj::validate);
+    }
+
+    // No format member
+    @Test
+    public void OpaqueSubjectsNegativeTest4()  {
+        final OpaqueSubjectIdentifier subj = new OpaqueSubjectIdentifier.Builder()
+                .id("11112222333344445555")
+                .build();
+        subj.remove("format");
+        Assert.assertThrows(SIValidationException.class, subj::validate);
     }
 }

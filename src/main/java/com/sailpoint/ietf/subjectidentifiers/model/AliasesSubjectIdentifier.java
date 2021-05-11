@@ -50,6 +50,9 @@ public class AliasesSubjectIdentifier extends SubjectIdentifier {
             throw new SIValidationException("AliasesSubjectIdentifier identifiers member must be a JSON Array");
         }
         JSONArray identifiers = (JSONArray) o;
+        if (identifiers.isEmpty()) {
+            throw new SIValidationException("AliasesSubjectIdentifier identifiers member must have one or more items.");
+        }
         // Items in this array are other subject identifiers
         // Validate each of them.
         for (Object si : identifiers) {

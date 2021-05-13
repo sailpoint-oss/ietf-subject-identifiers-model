@@ -57,8 +57,9 @@ public class AliasesSubjectIdentifier extends SubjectIdentifier {
                 // Alias SIs cannot be recursive
                 SubjectIdentifier subj = (SubjectIdentifier) si;
                 String childFormat = subj.getString(SubjectIdentifierMembers.FORMAT);
-                 if (!(SubjectIdentifierFormats.ALIASES.toString().equals(childFormat)))
-                    throw new SIValidationException("AliasesSubjectIdentifier identifiers member must not be an AliasSI.");
+                 if (SubjectIdentifierFormats.ALIASES.toString().equals(childFormat)) {
+                     throw new SIValidationException("AliasesSubjectIdentifier identifiers member must not be an AliasSI.");
+                 }
                 subj.validate();
             }
         }

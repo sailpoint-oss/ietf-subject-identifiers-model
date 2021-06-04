@@ -23,12 +23,12 @@ public class SubjectIdentifierTests {
     @Test
     public void DIDTest1() throws ParseException {
         DIDSubjectIdentifier subj = new DIDSubjectIdentifier.Builder()
-                .uri("did:example:123456")
+                .url("did:example:123456")
                 .build();
 
         final String figure_text = "{\n" +
                 "  \"format\": \"did\",\n" +
-                "  \"uri\": \"did:example:123456\"\n" +
+                "  \"url\": \"did:example:123456\"\n" +
                 "}";
 
         final JSONObject figureJson = new JSONObject(JSONObjectUtils.parse(figure_text));
@@ -38,23 +38,33 @@ public class SubjectIdentifierTests {
     @Test
     public void DIDTest2() throws ParseException, SIValidationException {
         DIDSubjectIdentifier subj = new DIDSubjectIdentifier.Builder()
-                .uri("did:example:123456")
+                .url("did:example:123456")
                 .build();
         subj.validate();
     }
 
+    // Empty URL
     @Test
     public void DIDTest3()  {
         DIDSubjectIdentifier subj = new DIDSubjectIdentifier.Builder()
-                .uri("example:123456")
+                .url("")
                 .build();
         Assert.assertThrows(SIValidationException.class, subj::validate);
     }
 
+    // Null URL
     @Test
     public void DIDTest4()  {
         DIDSubjectIdentifier subj = new DIDSubjectIdentifier.Builder()
-                .uri("http://example:123456")
+                .url(null)
+                .build();
+        Assert.assertThrows(SIValidationException.class, subj::validate);
+    }
+
+    // No URL
+    @Test
+    public void DIDTest5()  {
+        DIDSubjectIdentifier subj = new DIDSubjectIdentifier.Builder()
                 .build();
         Assert.assertThrows(SIValidationException.class, subj::validate);
     }

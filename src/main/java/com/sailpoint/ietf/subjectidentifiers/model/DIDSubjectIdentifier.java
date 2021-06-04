@@ -9,31 +9,9 @@ package com.sailpoint.ietf.subjectidentifiers.model;
 
 import com.nimbusds.jose.shaded.json.JSONObject;
 
-import java.net.URISyntaxException;
-import java.net.URI;
 import java.text.ParseException;
 
 public class DIDSubjectIdentifier extends SubjectIdentifier {
-
-    private void validateUri() throws ParseException, SIValidationException {
-        validateMemberPresentNotNullNotEmptyString(SubjectIdentifierMembers.URI.toString());
-
-        final Object o = this.get(SubjectIdentifierMembers.URI.toString());
-
-        URI uri;
-        try {
-            uri = new URI((String)o);
-        }  catch (URISyntaxException e) {
-            throw new SIValidationException("DIDSubjectIdentifier member uri invalid URI.");
-        }
-        String scheme = uri.getScheme();
-        if (null == scheme) {
-            throw new SIValidationException("DIDSubjectIdentifier member uri must begin with a scheme.");
-        }
-        if (!scheme.equals("did")) {
-            throw new SIValidationException("DIDSubjectIdentifier member uri must have did: scheme.");
-        }
-    }
 
     @Override
     public void validate() throws ParseException, SIValidationException {
@@ -42,7 +20,8 @@ public class DIDSubjectIdentifier extends SubjectIdentifier {
         if (null == format || !format.equals(SubjectIdentifierFormats.DID.toString())) {
             throw new SIValidationException("DIDSubjectIdentifier must have format did.");
         }
-        validateUri();
+        // Minimal validation of the url field, because relative URLs and other valid strings can be here.
+        validateMemberPresentNotNullNotEmptyString(SubjectIdentifierMembers.URL.toString());
     }
 
     @Override
@@ -60,8 +39,8 @@ public class DIDSubjectIdentifier extends SubjectIdentifier {
             return this;
         }
 
-        public Builder uri(final String uri) {
-            members.put(SubjectIdentifierMembers.URI.toString(), uri);
+        public Builder url(final String url) {
+            members.put(SubjectIdentifierMembers.URL.toString(), url);
             return this;
         }
 
